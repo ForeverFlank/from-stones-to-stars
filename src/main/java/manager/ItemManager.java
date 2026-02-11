@@ -1,7 +1,7 @@
 package manager;
 
 import logic.item.Item;
-import utils.ResourceUtils;
+import util.ResourceUtils;
 
 import java.io.InputStream;
 import java.util.*;

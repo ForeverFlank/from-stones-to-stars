@@ -5,6 +5,10 @@ import math.BigNum;
 public class EnergyManager {
     private BigNum totalEnergy;
 
+    public EnergyManager(BigNum totalEnergy) {
+        this.totalEnergy = totalEnergy;
+    }
+
     public BigNum getTotalEnergy() {
         return totalEnergy;
     }

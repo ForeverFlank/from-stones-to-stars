@@ -1,4 +1,4 @@
-package manager;
+package manager.recipe;
 
 import logic.recipe.*;
 import math.BigNum;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public final class RecipeParser {
+    private static final String KEY_DISPLAYNAME = "displayName";
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_INPUT = "input";
     private static final String KEY_OUTPUT = "output";
@@ -42,7 +43,7 @@ public final class RecipeParser {
                 return;
             }
             case "}" -> {
-                System.out.println("Added recipe");
+                System.out.println("Added recipe '" + state.displayName + "'");
                 recipes.add(buildRecipe(state));
                 return;
             }
@@ -57,6 +58,7 @@ public final class RecipeParser {
         String value = line.substring(equalsIndex + 1).trim();
 
         switch (key) {
+            case KEY_DISPLAYNAME -> state.displayName = value;
             case KEY_DESCRIPTION -> state.description = value;
             case KEY_INPUT -> state.inputs.add(parseInput(value));
             case KEY_OUTPUT -> state.outputs.add(parseOutput(value));
@@ -67,9 +69,10 @@ public final class RecipeParser {
 
     private static Recipe buildRecipe(RecipeParserState state) {
         return new Recipe(
+                state.displayName,
+                state.description,
                 new ArrayList<>(state.inputs),
                 new ArrayList<>(state.outputs),
-                state.description,
                 state.duration,
                 state.isAuto
         );
@@ -87,13 +90,13 @@ public final class RecipeParser {
 
         BigNum quantity = parseBigNum(parts[0]);
         String itemName = parts[1];
-        boolean isSpecial = parts.length > 2;
+        boolean keepItem = parts.length > 2;
 
-        if ("energy".equals(itemName)) {
+        if (itemName.equals("energy")) {
             return new EnergyRecipeInput(quantity);
         }
 
-        return new ItemRecipeInput(itemName, quantity, isSpecial);
+        return new ItemRecipeInput(itemName, quantity, keepItem);
     }
 
     private static RecipeOutput parseOutput(String value) {
@@ -113,6 +116,7 @@ public final class RecipeParser {
     }
 
     private static final class RecipeParserState {
+        String displayName;
         String description;
         ArrayList<RecipeInput> inputs;
         ArrayList<RecipeOutput> outputs;
@@ -124,6 +128,7 @@ public final class RecipeParser {
         }
 
         void clear() {
+            displayName = "";
             description = "";
             inputs = new ArrayList<>();
             outputs = new ArrayList<>();

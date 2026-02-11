@@ -6,4 +6,9 @@ public class EnergyRecipeInput extends RecipeInput {
     public EnergyRecipeInput(BigNum quantity) {
         super(quantity);
     }
+
+    @Override
+    public String getResourceDisplayName() {
+        return "Energy";
+    }
 }

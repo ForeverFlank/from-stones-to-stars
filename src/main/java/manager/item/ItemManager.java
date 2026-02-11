@@ -1,4 +1,4 @@
-package manager;
+package manager.item;
 
 import logic.item.Item;
 import util.ResourceUtils;
@@ -21,5 +21,11 @@ public class ItemManager {
             HashMap<String, Item> items = ItemParser.parseItems(stream);
             itemByName.putAll(items);
         }
+
+        System.out.println(itemByName.size() + " items loaded.");
+    }
+
+    public Item getItem(String name) {
+        return itemByName.get(name);
     }
 }

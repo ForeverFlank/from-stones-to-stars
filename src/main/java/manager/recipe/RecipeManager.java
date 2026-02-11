@@ -1,4 +1,4 @@
-package manager;
+package manager.recipe;
 
 import logic.recipe.*;
 import util.ResourceUtils;
@@ -15,13 +15,12 @@ public class RecipeManager {
     }
 
     private void loadAllRecipes() {
-        Map<String, InputStream> inputStreams = ResourceUtils.loadResourceFiles("items");
+        Map<String, InputStream> inputStreams = ResourceUtils.loadResourceFiles("recipes");
         for (InputStream stream : inputStreams.values()) {
             ArrayList<Recipe> parsedRecipes = RecipeParser.parseRecipes(stream);
             recipes.addAll(parsedRecipes);
         }
     }
 
-    // TODO: throw exception if something fails
-
+    // TODO: verify if all recipes use existing items
 }

@@ -1,22 +1,26 @@
 {
+    displayName = Stick collecting
     description = Grabbing sticks from the ground
     input = 0.01 energy
     output = 1 stick
     duration = 0.05
 }
 {
+    displayName = Rock collecting
     description = Grabbing rocks from the ground
     input = 0.05 energy
     output = 1 rock
     duration = 0.1
 }
 {
+    displayName = Leaf collecting
     description = Pulling leaves from trees
     input = 0.02 energy
     output = 10 leaf
     duration = 0.2
 }
 {
+    displayName = Wood cutting
     description = Cutting trees with stone axes
     input = 1 stone_axe keep
     output = 1 wood

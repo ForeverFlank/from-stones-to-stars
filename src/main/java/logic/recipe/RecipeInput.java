@@ -8,4 +8,6 @@ public abstract class RecipeInput {
     public RecipeInput(BigNum quantity) {
         this.quantity = quantity;
     }
+
+    public abstract String getResourceDisplayName();
 }

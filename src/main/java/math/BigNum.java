@@ -212,4 +212,13 @@ public class BigNum {
     public boolean isNegative() {
         return mantissa < 0.0;
     }
+
+    public String formatString() {
+        return toString();  // TODO: toString but beauty
+    }
+
+    @Override
+    public String toString() {
+        return mantissa + "e" + exponent;
+    }
 }

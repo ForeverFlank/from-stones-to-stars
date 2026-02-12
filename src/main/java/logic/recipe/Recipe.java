@@ -3,8 +3,9 @@ package logic.recipe;
 import math.BigNum;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Recipe {
+public final class Recipe {
     public final String displayName;
     public final String description;
     public final ArrayList<RecipeInput> inputs;
@@ -13,12 +14,12 @@ public class Recipe {
     public final boolean isAuto;
 
     public Recipe(
-            String displayName,
-            String description,
-            ArrayList<RecipeInput> inputs,
-            ArrayList<RecipeOutput> outputs,
-            BigNum duration,
-            boolean isAuto
+        String displayName,
+        String description,
+        ArrayList<RecipeInput> inputs,
+        ArrayList<RecipeOutput> outputs,
+        BigNum duration,
+        boolean isAuto
     ) {
         this.displayName = displayName;
         this.description = description;

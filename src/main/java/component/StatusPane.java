@@ -19,12 +19,7 @@ public class StatusPane extends HBox {
     }
 
     public void update() {
-        BigNum energy = Game.getInstance().itemManager.getQuantity("energy");
-        energyDisplay.setText(energy.format(
-                3,
-                1e6,
-                RoundingMode.FLOOR,
-                false
-        ));
+        BigNum energy = Game.getInstance().itemManager.getAmount("energy");
+        energyDisplay.setText(energy.format(1, 1e6, false));
     }
 }

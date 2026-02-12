@@ -55,9 +55,9 @@ public class BigNum {
         BigNum higher = max(lhs, rhs);
         BigNum lower = min(lhs, rhs);
 
-        return higher.isNegative()
-                ? addPositiveHigherLhs(higher, lower)
-                : addPositiveHigherLhs(lower.neg(), higher.neg()).neg();
+        return higher.isPositive()
+               ? addPositiveHigherLhs(higher, lower)
+               : addPositiveHigherLhs(lower.neg(), higher.neg()).neg();
     }
 
     private static BigNum addPositiveHigherLhs(BigNum lhs, BigNum rhs) {
@@ -129,6 +129,10 @@ public class BigNum {
 
     public BigNum recip() {
         return new BigNum(1.0 / mantissa, -exponent);
+    }
+
+    public BigNum abs() {
+        return new BigNum(Math.abs(mantissa), exponent);
     }
 
 
@@ -225,42 +229,40 @@ public class BigNum {
 
 
     public String format(
-            int decimalPlaces,
-            double scientificNotationThreshold,
-            RoundingMode roundingMode,
-            boolean trimDecimals
+        int decimalPlaces,
+        double scientificNotationThreshold,
+        boolean trimDecimals
     ) {
         if (cmp(scientificNotationThreshold) < 0) {
             double value = mantissa * Math.pow(10, exponent);
             return trimDecimals
-                    ? formatDouble(value, decimalPlaces, roundingMode)
-                    : formatDoubleAndTrim(value, decimalPlaces, roundingMode);
+                   ? formatDoubleAndTrim(value, decimalPlaces)
+                   : formatDouble(value, decimalPlaces);
         }
 
-        String formattedMantissa = formatDouble(mantissa, decimalPlaces, roundingMode);
+        String formattedMantissa = formatDouble(mantissa, decimalPlaces);
         String formattedExponent = String.format("%.0f", exponent);
         return formattedMantissa + "e" + formattedExponent;
     }
 
-    private static String formatDouble(
-            double value,
-            int decimalPlaces,
-            RoundingMode roundingMode
-    ) {
+    private static String formatDouble(double value, int decimalPlaces) {
         return BigDecimal.valueOf(value)
-                .setScale(decimalPlaces, roundingMode)
-                .toPlainString();
+                         .setScale(decimalPlaces, RoundingMode.HALF_UP)
+                         .toPlainString();
     }
 
-    private static String formatDoubleAndTrim(
-            double value,
-            int decimalPlaces,
-            RoundingMode roundingMode
+    private static String formatDoubleAndTrim(double value, int decimalPlaces
     ) {
         return BigDecimal.valueOf(value)
-                .setScale(decimalPlaces, roundingMode)
-                .stripTrailingZeros()
-                .toPlainString();
+                         .setScale(decimalPlaces, RoundingMode.HALF_UP)
+                         .stripTrailingZeros()
+                         .toPlainString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BigNum value)) return false;
+        return mantissa == value.mantissa && exponent == value.exponent;
     }
 
     @Override

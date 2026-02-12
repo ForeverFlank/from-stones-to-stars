@@ -1,6 +1,8 @@
 package manager.recipe;
 
-import logic.recipe.*;
+import logic.recipe.Recipe;
+import logic.recipe.RecipeInput;
+import logic.recipe.RecipeOutput;
 import math.BigNum;
 
 import java.io.InputStream;
@@ -30,9 +32,9 @@ public final class RecipeParser {
     }
 
     private static void parseLine(
-            String line,
-            RecipeParserState state,
-            ArrayList<Recipe> recipes
+        String line,
+        RecipeParserState state,
+        ArrayList<Recipe> recipes
     ) {
         switch (line) {
             case "" -> {
@@ -69,12 +71,12 @@ public final class RecipeParser {
 
     private static Recipe buildRecipe(RecipeParserState state) {
         return new Recipe(
-                state.displayName,
-                state.description,
-                new ArrayList<>(state.inputs),
-                new ArrayList<>(state.outputs),
-                state.duration,
-                state.isAuto
+            state.displayName,
+            state.description,
+            new ArrayList<>(state.inputs),
+            new ArrayList<>(state.outputs),
+            state.duration,
+            state.isAuto
         );
     }
 
@@ -88,11 +90,11 @@ public final class RecipeParser {
             throw new IllegalArgumentException("Invalid input definition: " + value);
         }
 
-        BigNum quantity = parseBigNum(parts[0]);
+        BigNum amount = parseBigNum(parts[0]);
         String itemName = parts[1];
         boolean keepItem = parts.length > 2;
 
-        return new RecipeInput(itemName, quantity, keepItem);
+        return new RecipeInput(itemName, amount, keepItem);
     }
 
     private static RecipeOutput parseOutput(String value) {
@@ -101,10 +103,10 @@ public final class RecipeParser {
             throw new IllegalArgumentException("Invalid output definition: " + value);
         }
 
-        BigNum quantity = parseBigNum(parts[0]);
+        BigNum amount = parseBigNum(parts[0]);
         String itemName = parts[1];
 
-        return new RecipeOutput(itemName, quantity);
+        return new RecipeOutput(itemName, amount);
     }
 
     private static final class RecipeParserState {

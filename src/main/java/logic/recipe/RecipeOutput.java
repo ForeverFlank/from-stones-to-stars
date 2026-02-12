@@ -5,18 +5,11 @@ import manager.Game;
 import manager.item.ItemManager;
 import math.BigNum;
 
-public class RecipeOutput {
-    public final BigNum quantity;
-    public final String itemName;
-
-    public RecipeOutput(String itemName, BigNum quantity) {
-        this.quantity = quantity;
-        this.itemName = itemName;
-    }
+public record RecipeOutput(String itemName, BigNum amount) {
 
     public String getItemDisplayName() {
         ItemManager itemManager = Game.getInstance().itemManager;
         Item item = itemManager.itemByName.get(itemName);
-        return item.displayName;
+        return item.displayName();
     }
 }

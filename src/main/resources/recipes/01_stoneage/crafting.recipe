@@ -1,0 +1,12 @@
+{
+    input = 10 leaf
+    output = 1 natural_rope
+    duration = 1
+}
+{
+    input = 1 stick
+    input = 1 natural_rope
+    input = 1 rock
+    output = 1 stone_axe
+    duration = 10
+}

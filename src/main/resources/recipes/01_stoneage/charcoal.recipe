@@ -1,7 +1,8 @@
 {
+    displayName = Charcoal pit construction
     description = Building a charcoal pit
-    input = 16 stick
-    input = 16 leaf
+    input = 10 stick
+    input = 10 leaf
     output = 1 charcoal_pit
 }
 {

@@ -25,9 +25,9 @@ public final class ItemParser {
     }
 
     private static void parseLine(
-            String line,
-            ItemParserState state,
-            HashMap<String, Item> items
+        String line,
+        ItemParserState state,
+        HashMap<String, Item> items
     ) {
         if (line.isEmpty()) {
             return;
@@ -59,8 +59,8 @@ public final class ItemParser {
     }
 
     private static void addItem(
-            ItemParserState state,
-            HashMap<String, Item> items
+        ItemParserState state,
+        HashMap<String, Item> items
     ) {
         if (state.name == null || state.displayName == null) {
             return;

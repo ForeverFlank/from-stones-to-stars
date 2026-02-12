@@ -33,7 +33,7 @@ public class Game {
         researchManager = new ResearchManager();
         timeManager = new TimeManager();
 
-        itemManager.setQuantity("energy", new BigNum(10));
+        itemManager.setAmount("energy", new BigNum(10));
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.05), _ -> step());
         Timeline timeline = new Timeline(keyFrame);
@@ -45,20 +45,26 @@ public class Game {
 
     }
 
-    public boolean useRecipe(Recipe recipe) {
+    public boolean canUseRecipe(Recipe recipe) {
+        final double EPSILON = 1E-7;
         for (RecipeInput input : recipe.inputs) {
-            if (!itemManager.hasEnough(input.itemName, input.quantity)) {
+            if (!itemManager.hasEnough(input.itemName(), input.amount(), EPSILON)) {
                 return false;
             }
         }
+        return true;
+    }
+
+    public boolean useRecipe(Recipe recipe) {
+        if (!canUseRecipe(recipe)) return false;
 
         for (RecipeInput input : recipe.inputs) {
-            if (input.keepItem) continue;
-            itemManager.remove(input.itemName, input.quantity);
+            if (input.keepItem()) continue;
+            itemManager.remove(input.itemName(), input.amount());
         }
 
         for (RecipeOutput output : recipe.outputs) {
-            itemManager.add(output.itemName, output.quantity);
+            itemManager.add(output.itemName(), output.amount());
         }
 
         return true;

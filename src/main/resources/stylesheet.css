@@ -1,0 +1,9 @@
+.button {
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+.button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

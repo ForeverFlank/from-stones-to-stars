@@ -3,7 +3,7 @@
     description = Burning sticks like a caveman
     input = 1 stick
     output = 1 energy
-    duration = 10
+    duration = 1
 }
 {
     displayName = Charcoal burning

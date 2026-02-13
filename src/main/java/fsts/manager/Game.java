@@ -15,8 +15,8 @@ public class Game {
 
     public final EnergyManager energyManager;
     public final GeneratorManager generatorManager;
+    public final ResearchManager researchManager;
     public final TimeManager timeManager;
-    // TODO: research manager: something like a slider for spending some energy into research
 
     public static void init() {
         instance = new Game();
@@ -29,6 +29,7 @@ public class Game {
     private Game() {
         energyManager = new EnergyManager();
         generatorManager = new GeneratorManager();
+        researchManager = new ResearchManager();
         timeManager = new TimeManager();
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
@@ -37,12 +38,31 @@ public class Game {
     }
 
     public void update() {
+        energyManager.addEnergy(getFinalEnergyGeneration().mul(timeManager.getDeltaTime()));
+    }
+
+    public BigNum getTotalEnergyGeneration() {
+        BigNum totalEnergy = BigNum.ZERO;
+
         for (GeneratorState generator : generatorManager.generatorStates) {
             GeneratorDefinition definition = generator.definition;
             BigNum count = generator.getCount();
-            BigNum energyGenerated = definition.baseGeneration.mul(count).mul(timeManager.getDeltaTime());
-            energyManager.addEnergy(energyGenerated);
+            BigNum energyGenerated = definition.baseGeneration.mul(count);
+
+            totalEnergy = totalEnergy.add(energyGenerated);
         }
+        return totalEnergy;
+    }
+
+    public BigNum getFinalEnergyGeneration() {
+        BigNum totalEnergy = getTotalEnergyGeneration();
+        return totalEnergy.mul(1.0 - researchManager.getResearchFraction());
+    }
+
+    public BigNum getFinalResearchGeneration() {
+        BigNum totalEnergy = getTotalEnergyGeneration();
+        BigNum usedEnergy = totalEnergy.mul(researchManager.getResearchFraction());
+        return usedEnergy.mul(researchManager.getResearchPerEnergy());
     }
 
     // TODO: (..., BigNum amount) param
@@ -53,4 +73,5 @@ public class Game {
             generatorState.addCount(BigNum.ONE);
         }
     }
+
 }

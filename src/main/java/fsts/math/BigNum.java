@@ -236,13 +236,8 @@ public record BigNum(double mantissa, double exponent) {
         return mantissa < 0.0;
     }
 
-
-    public String format(
-        int decimalPlaces,
-        double scientificNotationThreshold,
-        boolean trimDecimals
-    ) {
-        if (cmp(scientificNotationThreshold) < 0) {
+    public String format(int decimalPlaces, double eNotationThreshold, boolean trimDecimals) {
+        if (cmp(eNotationThreshold) < 0) {
             double value = mantissa * Math.pow(10, exponent);
             return trimDecimals
                    ? formatDoubleAndTrim(value, decimalPlaces)
@@ -260,8 +255,7 @@ public record BigNum(double mantissa, double exponent) {
                          .toPlainString();
     }
 
-    private static String formatDoubleAndTrim(double value, int decimalPlaces
-    ) {
+    private static String formatDoubleAndTrim(double value, int decimalPlaces) {
         return BigDecimal.valueOf(value)
                          .setScale(decimalPlaces, RoundingMode.HALF_UP)
                          .stripTrailingZeros()
@@ -270,8 +264,8 @@ public record BigNum(double mantissa, double exponent) {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BigNum value)) return false;
-        return mantissa == value.mantissa && exponent == value.exponent;
+        if (!(obj instanceof BigNum(double mantissa1, double exponent1))) return false;
+        return mantissa == mantissa1 && exponent == exponent1;
     }
 
     @Override

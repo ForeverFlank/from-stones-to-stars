@@ -2,11 +2,12 @@ package fsts.manager;
 
 import fsts.logic.generator.GeneratorDefinition;
 import fsts.logic.generator.GeneratorState;
-import fsts.logic.generator.variant.*;
+import fsts.logic.generator.tier1.CampfireGenerator;
+import fsts.logic.generator.tier1.HumanPowerGenerator;
+import fsts.logic.generator.tier1.WatermillGenerator;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GeneratorManager {
 
@@ -14,15 +15,9 @@ public class GeneratorManager {
 
     public GeneratorManager() {
         GeneratorDefinition[] generatorDefinitions = {
+            new HumanPowerGenerator(),
             new CampfireGenerator(),
-            new WindmillGenerator(),
-            new FossilFuelGenerator(),
-            new GroundSolarGenerator(),
-            new FissionGenerator(),
-            new FusionGenerator(),
-            new SpaceSolarGenerator(),
-            new DysonSwarmGenerator(),
-            new BlackHoleGenerator(),
+            new WatermillGenerator(),
         };
         generatorStates = Arrays.stream(generatorDefinitions)
                                 .map(GeneratorState::new)

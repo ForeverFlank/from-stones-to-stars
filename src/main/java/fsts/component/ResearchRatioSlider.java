@@ -2,16 +2,16 @@ package fsts.component;
 
 import fsts.manager.Game;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-public class ResearchPane extends BorderPane {
+public class ResearchRatioSlider extends HBox {
 
     private final Text fractionText;
 
-    public ResearchPane() {
+    public ResearchRatioSlider() {
         Slider slider = new Slider();
         slider.setMin(0.0);
         slider.setMax(1.0);
@@ -19,9 +19,8 @@ public class ResearchPane extends BorderPane {
 
         fractionText = new Text("0%");
 
-        HBox hBox = new HBox(slider, fractionText);
-
-        setTop(hBox);
+        getChildren().addAll(slider, fractionText);
+        setAlignment(Pos.CENTER);
     }
 
     public void onSliderValueChange(

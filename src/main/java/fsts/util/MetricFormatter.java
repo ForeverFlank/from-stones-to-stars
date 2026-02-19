@@ -1,9 +1,9 @@
 package fsts.util;
 
-import fsts.math.BigNum;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import fsts.math.BigNum;
 
 public final class MetricFormatter {
 
@@ -31,7 +31,7 @@ public final class MetricFormatter {
 
         int exponent = (int) Math.round(num.exponent());
         int exponentDiv3 = (int) Math.floor(exponent / 3.0);
-        int decimalPlaces = 2 - ((exponent % 3) + 3) % 3;
+        int decimalPlaces = 3 - ((exponent % 3) + 3) % 3;
 
         String prefix = switch (exponentDiv3) {
             case 1 -> "k";
@@ -45,8 +45,8 @@ public final class MetricFormatter {
             default -> "";
         };
 
-        double[] pow10 = {1.0, 10.0, 100.0};
-        double mantissa = absNum.mantissa() * pow10[2 - decimalPlaces];
+        double[] pow10 = {1.0, 10.0, 100.0, 1000.0};
+        double mantissa = absNum.mantissa() * pow10[3 - decimalPlaces];
         String formattedMantissa = BigDecimal.valueOf(mantissa)
                                              .setScale(decimalPlaces, RoundingMode.HALF_UP)
                                              .toPlainString();

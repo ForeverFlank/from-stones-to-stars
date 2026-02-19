@@ -4,7 +4,7 @@ import fsts.manager.Game;
 import fsts.math.BigNum;
 import fsts.util.MetricFormatter;
 import javafx.geometry.Pos;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -30,12 +30,18 @@ public class StatusPane extends VBox {
         researchPointTextContainer.setPrefWidth(100);
         researchPointTextContainer.setAlignment(Pos.CENTER_LEFT);
 
+        ResearchRatioSlider researchRatioSlider = new ResearchRatioSlider();
+        StackPane researchRatioContainer = new StackPane(researchRatioSlider);
+        researchRatioContainer.setPrefWidth(200);
+        researchRatioContainer.setAlignment(Pos.CENTER_LEFT);
 
-        BorderPane energyStatusContainer = new BorderPane();
-        energyStatusContainer.setPrefWidth(200);
-        energyStatusContainer.setMaxWidth(200);
-        energyStatusContainer.setLeft(energyTextContainer);
-        energyStatusContainer.setRight(researchPointTextContainer);
+        HBox energyStatusContainer = new HBox(
+            energyTextContainer,
+            researchPointTextContainer,
+            researchRatioContainer
+        );
+        energyStatusContainer.setPrefWidth(400);
+        energyStatusContainer.setMaxWidth(400);
 
         finalGenerationText = new Text();
 
@@ -48,7 +54,7 @@ public class StatusPane extends VBox {
         BigNum finalEnergyGeneration = Game.getInstance().getFinalEnergyGeneration();
 
         energyText.setText(MetricFormatter.formatPositivePrefixes(energy, "Wh"));
-        researchPointText.setText(researchPoint.format(2, 1e6, false) + " RP");
+        researchPointText.setText(researchPoint.format(3, 1e6, false) + " RP");
         finalGenerationText.setText(
             "Generating " + MetricFormatter.formatPositivePrefixes(finalEnergyGeneration, "W"));
     }

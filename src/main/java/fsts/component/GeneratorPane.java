@@ -1,16 +1,17 @@
 package fsts.component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fsts.logic.generator.GeneratorState;
 import fsts.logic.tier.TechTier;
 import fsts.manager.Game;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GeneratorPane extends VBox {
 
     private final List<GeneratorButton> generatorButtons;
+    private final PrestigePane prestigePane;
 
     public GeneratorPane() {
         generatorButtons = new ArrayList<>();
@@ -22,12 +23,18 @@ public class GeneratorPane extends VBox {
             }
         }
 
-        getChildren().addAll(generatorButtons);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(generatorButtons);
+
+        prestigePane = new PrestigePane();
+
+        getChildren().addAll(vBox, prestigePane);
     }
 
     public void update() {
         for (GeneratorButton button : generatorButtons) {
             button.update();
         }
+        prestigePane.update();
     }
 }

@@ -1,5 +1,6 @@
 package croissius.component;
 
+import croissius.manager.GameManager;
 import javafx.scene.layout.HBox;
 
 public class GamePane extends HBox {
@@ -8,7 +9,10 @@ public class GamePane extends HBox {
     private final ShooterPane playfieldPane;
     private final ShopPane shopPane;
 
-    public GamePane() {
+    // TODO use dependency injection.
+    // minimize Game.getInstance()....
+    public GamePane(GameManager gameManager) {
+
         this.statusPane = new StatusPane();
         this.playfieldPane = new ShooterPane();
         this.shopPane = new ShopPane();
